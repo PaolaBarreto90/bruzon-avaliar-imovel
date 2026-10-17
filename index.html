@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bruzon Imóveis | Ficha de Análise</title><style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#282521;background:#f5f3f0}*{box-sizing:border-box}body{margin:0}.wrap{max-width:760px;margin:auto;padding:20px 16px 56px}header{background:#171717;color:#fff;padding:24px 18px;border-bottom:4px solid #b58c44;text-align:center}header h1{margin:0;font-size:23px;letter-spacing:.9px}header p{margin:8px 0 0;color:#dfd0b7;font-size:14px}.intro{line-height:1.5;color:#564c41}section{background:white;padding:22px;border:1px solid #e4ded5;border-radius:13px;box-shadow:0 2px 8px #00000009;margin:18px 0}h2{font-size:17px;margin:0 0 17px;color:#26211a}label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}input,select,textarea{width:100%;border:1px solid #ccc5bb;border-radius:8px;padding:11px;font:inherit;background:white;color:#282521}input:focus,select:focus,textarea:focus{outline:2px solid #b58c44;outline-offset:1px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{margin-bottom:15px}.grid .field{margin-bottom:0}.hint{font-size:12px;color:#6c6358;margin-top:5px}.actions{display:flex;gap:10px;flex-wrap:wrap}button,.link{border:0;border-radius:9px;padding:13px 17px;font-size:14px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none}.primary{background:#1e1b17;color:white}.secondary{background:#eae4d9;color:#2d281f}.link{background:#b58c44;color:#1e1b17;display:inline-block}.status{margin-top:12px;font-size:14px;min-height:18px}details{margin-top:17px;font-size:13px}summary{cursor:pointer;color:#6b4b22}footer{font-size:12px;color:#776b5d;text-align:center;margin-top:18px}@media(max-width:540px){.grid{grid-template-columns:1fr}section{padding:17px}.actions{flex-direction:column}.actions>*{width:100%}}
+</style></head><body><header><h1>BRUZON IMÓVEIS</h1><p>Ficha de Análise Comparativa de Mercado</p></header><main class="wrap"><p class="intro">Preencha os dados disponíveis do imóvel. Depois toque em <strong>Copiar e abrir ChatGPT</strong>. A ficha copia o pedido e abre o ChatGPT; lá, basta colar e enviar a mensagem.</p>
+<section><h2>1. Identificação e características</h2><div class="field"><label for="endereco">Endereço completo *</label><input id="endereco" placeholder="Rua, número, bairro, cidade e UF" required></div><div class="grid"><div class="field"><label for="tipo">Tipo de imóvel *</label><select id="tipo"><option value="">Selecione</option><option>Casa</option><option>Apartamento</option><option>Terreno</option><option>Chácara</option><option>Galpão</option><option>Imóvel comercial</option><option>Outro</option></select></div><div class="field"><label for="conservacao">Conservação</label><select id="conservacao"><option value="">Não informado</option><option>Novo</option><option>Reformado</option><option>Bom estado</option><option>Regular</option><option>Necessita reforma</option></select></div><div class="field"><label for="terreno">Área do terreno (m²)</label><input id="terreno" type="text" inputmode="decimal" placeholder="Ex.: 250"></div><div class="field"><label for="construida">Área construída/privativa (m²)</label><input id="construida" inputmode="decimal" placeholder="Ex.: 160"></div><div class="field"><label for="dormitorios">Dormitórios</label><input id="dormitorios" type="number" min="0" placeholder="Ex.: 3"></div><div class="field"><label for="suites">Suítes</label><input id="suites" type="number" min="0" placeholder="Ex.: 1"></div><div class="field"><label for="banheiros">Banheiros</label><input id="banheiros" type="number" min="0" placeholder="Ex.: 2"></div><div class="field"><label for="vagas">Vagas de garagem</label><input id="vagas" type="number" min="0" placeholder="Ex.: 2"></div></div><div class="field" style="margin-top:15px"><label for="diferenciais">Diferenciais e observações</label><textarea id="diferenciais" rows="3" placeholder="Ex.: piscina, condomínio, varanda, reformado, documentação... "></textarea></div></section>
+<section><h2>2. Preço e comissão</h2><div class="field"><label for="preco">Valor pedido pelo proprietário (R$) *</label><input id="preco" placeholder="Ex.: 550.000,00" inputmode="decimal" autocomplete="off"></div><div class="field"><label for="comissao">Esse valor...</label><select id="comissao"><option value="Não informado — apresentar ambos os cenários">Ainda não foi esclarecido</option><option value="É líquido para o proprietário — calcular preço final dividindo por 0,94">É líquido para o proprietário</option><option value="Já inclui a comissão de 6% da Bruzon — não acrescentar novamente">Já inclui a comissão de 6%</option></select></div><p class="hint">O valor é formatado automaticamente em reais (ex.: 550000 → R$ 550.000,00). Para centavos, digite vírgula.</p><p class="hint">A comissão da Bruzon é de 6% sobre o valor final da venda. Em anúncios de outras imobiliárias, use o preço divulgado como preço final, sem somar comissão.</p></section>
+<section><h2>3. Enviar para análise</h2><div class="actions"><button type="button" class="primary" id="copiarabrir">Copiar e abrir ChatGPT ↗</button><button type="button" class="secondary" id="copiar">Só copiar pedido</button><button type="button" class="secondary" id="limpar">Limpar ficha</button></div><div class="status" id="status" role="status" aria-live="polite"></div><p class="hint">O botão abre diretamente o projeto compartilhado da Bruzon no ChatGPT. É necessário ter acesso autorizado ao projeto e colar e enviar o pedido na nova conversa.</p></section>
+<footer>BRUZON IMÓVEIS • Ferramenta de apoio à captação • Confira as fontes e os anúncios utilizados na pesquisa</footer></main><script>
+// Máscara monetária brasileira: ponto nos milhares e vírgula nos centavos.
+const campoPreco=document.getElementById('preco');
+function formatarPreco(entrada, completar=false){
+  let bruto=String(entrada).replace(/R\$|\s/g,'').replace(/[^0-9.,]/g,'');
+  if(!bruto)return '';
+  // Vírgula separa centavos; pontos são agrupadores de milhar.
+  const partes=bruto.split(',');
+  let inteiro=(partes[0]||'').replace(/\D/g,'').replace(/^0+(?=\d)/,'')||'0';
+  let centavos=partes.length>1?partes.slice(1).join('').replace(/\D/g,'').slice(0,2):null;
+  const agrupado=inteiro.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  if(completar)centavos=(centavos||'').padEnd(2,'0');
+  return 'R$ '+agrupado+(centavos!==null?','+centavos:'');
+}
+campoPreco.addEventListener('input',()=>{
+  const pos=campoPreco.selectionStart??campoPreco.value.length;
+  const antes=campoPreco.value.slice(0,pos);
+  const digitosAntes=(antes.match(/\d/g)||[]).length;
+  const tinhaVirgulaAntes=antes.includes(',');
+  const novo=formatarPreco(campoPreco.value);
+  campoPreco.value=novo;
+  let novoPos=novo.length;
+  let cont=0;
+  for(let i=0;i<novo.length;i++){
+    if(/\d/.test(novo[i]))cont++;
+    if(cont===digitosAntes){novoPos=i+1;break}
+  }
+  if(digitosAntes===0)novoPos=novo.startsWith('R$ ')?3:0;
+  if(tinhaVirgulaAntes && !novo.slice(0,novoPos).includes(',') && novo.includes(','))novoPos=novo.indexOf(',')+1;
+  campoPreco.setSelectionRange(novoPos,novoPos);
+});
+campoPreco.addEventListener('blur',()=>{campoPreco.value=formatarPreco(campoPreco.value,true)});
+const URL_PROJETO='https://chatgpt.com/g/g-p-6ad376cc68bc8191a7e16112769ad3f2-avaliacao-de-valores-de-venda-de-imoveis/project';
+const ids=['endereco','tipo','terreno','construida','dormitorios','suites','banheiros','vagas','conservacao','diferenciais','preco','comissao'];const el=id=>document.getElementById(id);const v=id=>String(el(id).value||'').trim()||'Não informado';
+function texto(){return `Faça uma análise comparativa de mercado de acordo com as instruções do projeto BRUZON IMÓVEIS — ANÁLISE DE MERCADO E CAPTAÇÃO. Pesquise na internet anúncios atuais e verificáveis (priorize RE/MAX, Barreto Imóveis, J.Pincinato, QuintoAndar, Viva Real, ZAP Imóveis, Imovelweb e imobiliárias locais), com 5 a 10 imóveis realmente comparáveis quando possível. Verifique a última atualização de cada anúncio; no caso de duplicatas do mesmo imóvel, use o anúncio com atualização verificável mais recente, sem duplicar a amostra, e informe divergências de preço. Trate preços anunciados por imobiliárias como preços finais de venda, sem acrescentar comissão. Considere a comissão Bruzon de 6% no preço final. Se o valor informado for líquido, divida por 0,94; se já incluir comissão, não acrescente novamente. Apresente links reais, tabela comparativa, faixa recomendada e valor líquido estimado; conclua CAPTAR, CAPTAR MEDIANTE NEGOCIAÇÃO ou NÃO RECOMENDAR. Se estiver acima do mercado, redija mensagem profissional e cordial ao proprietário explicando comparação com imóveis semelhantes e propondo adequação. Não invente fontes, anúncios ou datas e informe limitações.
+
+DADOS DO IMÓVEL
+Endereço completo: ${v('endereco')}
+Tipo de imóvel: ${v('tipo')}
+Área do terreno (m²): ${v('terreno')}
+Área construída/privativa (m²): ${v('construida')}
+Dormitórios: ${v('dormitorios')}
+Suítes: ${v('suites')}
+Banheiros: ${v('banheiros')}
+Vagas: ${v('vagas')}
+Conservação: ${v('conservacao')}
+Diferenciais e observações: ${v('diferenciais')}
+Valor solicitado pelo proprietário (R$): ${v('preco')}
+Condição do valor: ${v('comissao')}
+
+Realize a pesquisa e apresente a análise completa.`}
+function valido(){if(v('endereco')==='Não informado'||v('tipo')==='Não informado'||v('preco')==='Não informado'){el('status').textContent='Preencha pelo menos endereço, tipo de imóvel e preço.';return false}return true}
+async function copiarTexto(){
+ const t=texto();
+ // Quando a página é aberta como arquivo, a API moderna pode não estar disponível.
+ try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(t);return true}}catch(e){}
+ const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);let ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();return ok;
+}
+el('copiar').onclick=async()=>{if(!valido())return;const ok=await copiarTexto();el('status').textContent=ok?'Pedido copiado! Cole na conversa do ChatGPT e envie.':'Não foi possível copiar automaticamente. Tente abrir o arquivo em outro navegador.'};
+el('copiarabrir').onclick=async()=>{if(!valido())return;const ok=await copiarTexto();if(!ok){el('status').textContent='Não foi possível copiar automaticamente. Use o botão Só copiar pedido em outro navegador.';return}el('status').textContent='Pedido copiado. Abrindo o ChatGPT...';window.location.href=URL_PROJETO};
+el('limpar').onclick=()=>{ids.forEach(id=>el(id).value='');el('comissao').selectedIndex=0;el('status').textContent='Ficha limpa.'};
+
+</script></body></html>
